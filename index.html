@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emoji Calculator</title>
+    <style>
+        /* Add some basic styling */
+        .calculator {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px;
+        }
+
+        .calculator-screen {
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: right;
+            border: 1px solid #ddd;
+            padding: 5px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .calculator-button {
+            width: 45px;
+            height: 45px;
+            font-size: 20px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" readonly class="calculator-screen" id="calc-screen" value="">
+
+        <div class="button-row">
+            <button class="calculator-button" onclick="appendNumber('7')">7️⃣</button>
+            <button class="calculator-button" onclick="appendNumber('8')">8️⃣</button>
+            <button class="calculator-button" onclick="appendNumber('9')">9️⃣</button>
+            <button class="calculator-button" onclick="setOperator('/')">➗</button>
+        </div>
+
+        <div class="button-row">
+            <button class="calculator-button" onclick="appendNumber('4')">4️⃣</button>
+            <button class="calculator-button" onclick="appendNumber('5')">5️⃣</button>
+            <button class="calculator-button" onclick="appendNumber('6')">6️⃣</button>
+            <button class="calculator-button" onclick="setOperator('*')">✖️</button>
+        </div>
+
+        <div class="button-row">
+            <button class="calculator-button" onclick="appendNumber('1')">1️⃣</button>
+            <button class="calculator-button" onclick="appendNumber('2')">2️⃣</button>
+            <button class="calculator-button" onclick="appendNumber('3')">3️⃣</button>
+            <button class="calculator-button" onclick="setOperator('-')">➖</button>
+        </div>
+
+        <div class="button-row">
+            <button class="calculator-button" onclick="appendNumber('0')">0️⃣</button>
+            <button class="calculator-button" onclick="calculateResult()">🟰</button>
+            <button class="calculator-button" onclick="clearScreen()">🆑</button>
+            <button class="calculator-button" onclick="setOperator('+')">➕</button>
+        </div>
+    </div>
+
+    <script>
+        let currentInput = '';
+        let operator = null;
+        let firstOperand = null;
+
+        function appendNumber(number) {
+            currentInput += number;
+            updateScreen();
+        }
+
+        function setOperator(op) {
+            firstOperand = currentInput;
+            operator = op;
+            currentInput = '';
+        }
+
+        function calculateResult() {
+            if (!operator || !firstOperand) return;
+            let result = eval(`${firstOperand} ${operator} ${currentInput}`);
+            currentInput = String(result);
+            updateScreen();
+            operator = null;
+            firstOperand = null;
+        }
+
+        function clearScreen() {
+            currentInput = '';
+            operator = null;
+            firstOperand = null;
+            updateScreen();
+        }
+
+        function updateScreen() {
+            document.getElementById('calc-screen').value = currentInput;
+        }
+    </script>
+</body>
+</html>
